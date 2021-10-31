@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">TaskMaster</string>
     <string name="hello_heba">Hello Heba</string>
+    <string name="my_tasks">My Tasks</string>
+    <string name="add_task">ADD TASK</string>
+    <string name="all_tasks">ALL TASKS</string>
+    <string name="task_title">Task title</string>
+    <string name="add_task1">Add Task</string>
+    <string name="task_description">Task Description</string>
+    <string name="total_tasks_0">Total tasks: 0</string>
+    <string name="home">Home</string>
+    <string name="all_tasks1">All Tasks</string>
+    <string name="do_something">Do something</string>
+    <string name="task_master">Task Master</string>
+    <string name="my_task">My task</string>
 </resources>
