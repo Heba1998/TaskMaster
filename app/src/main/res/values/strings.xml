@@ -24,4 +24,9 @@
     <string name="username_s_tasks">{username}’s tasks</string>
     <string name="task_title1">Task Title</string>
     <string name="username">username</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="state">State</string>
 </resources>
