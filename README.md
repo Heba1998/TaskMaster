@@ -45,3 +45,16 @@
 *Task Detail page have a title at the top of the page, and description.*
 
 ![Task Detail Page](screenshots/TaskDetails.png)
+
+
+## **Lab28**
+
+# Homepage:
+
+*Refactor the homepage to use a RecyclerView for displaying Task data.*
+
+*you can tap on any one of the Tasks in the RecyclerView, and it will appropriately launch the detail page with the correct Task title displayed.*
+
+
+
+![Homepage](screenshots/HomePage28.png)
