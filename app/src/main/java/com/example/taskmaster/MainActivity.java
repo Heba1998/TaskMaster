@@ -3,6 +3,7 @@ package com.example.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // ----------------lab28-----------------------------
-        ArrayList<Task> Tasks = new ArrayList<Task>();
-        Tasks.add(new Task("Title","              Body", "                State"));
-        Tasks.add(new Task("task1","Task 1 About Linked list", "complete"));
-        Tasks.add(new Task("task2","Task 2 about binary tree", "in progress"));
-        Tasks.add(new Task("task3","Task 3 about Stack & Queue","assigned" ));
-
-
-        RecyclerView TasksRecuclerView = findViewById(R.id.recycleViewId);
-        TasksRecuclerView.setLayoutManager(new LinearLayoutManager(this));
-        TasksRecuclerView.setAdapter(new TaskViewAdapter(Tasks));
+//        ArrayList<Task> Tasks = new ArrayList<Task>();
+//        Tasks.add(new Task("Title","              Body", "                State"));
+//        Tasks.add(new Task("task1","Task 1 About Linked list", "complete"));
+//        Tasks.add(new Task("task2","Task 2 about binary tree", "in progress"));
+//        Tasks.add(new Task("task3","Task 3 about Stack & Queue","assigned" ));
+//
+//
+//        RecyclerView TasksRecuclerView = findViewById(R.id.recycleViewId);
+//        TasksRecuclerView.setLayoutManager(new LinearLayoutManager(this));
+//        TasksRecuclerView.setAdapter(new TaskViewAdapter(Tasks));
 
         // ------------------------------------------------------
 
@@ -67,38 +69,38 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        Button Details = findViewById(R.id.task1);
-        Details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View V) {
-                Intent goToDetails = new Intent(MainActivity.this,  TaskDetail.class);
-                startActivity(goToDetails);
-            }
-        });
-
-        Button task1 = findViewById(R.id.task1);
-        task1.setOnClickListener((view -> {
-            String taskTitle = task1.getText().toString();
-            Intent goToTask1 = new Intent(MainActivity.this , TaskDetail.class);
-            goToTask1.putExtra("Task Title", taskTitle);
-            startActivity(goToTask1);
-        }));
-
-        Button task2 = findViewById(R.id.task2);
-        task2.setOnClickListener((view -> {
-            String taskTitle = task2.getText().toString();
-            Intent goToTask2 = new Intent(MainActivity.this , TaskDetail.class);
-            goToTask2.putExtra("Task Title", taskTitle);
-            startActivity(goToTask2);
-        }));
-
-        Button task3 = findViewById(R.id.task3);
-        task3.setOnClickListener((view -> {
-            String taskTitle = task3.getText().toString();
-            Intent goToTask3 = new Intent(MainActivity.this , TaskDetail.class);
-            goToTask3.putExtra("Task Title", taskTitle);
-            startActivity(goToTask3);
-        }));
+//        Button Details = findViewById(R.id.task1);
+//        Details.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View V) {
+//                Intent goToDetails = new Intent(MainActivity.this,  TaskDetail.class);
+//                startActivity(goToDetails);
+//            }
+//        });
+//
+//        Button task1 = findViewById(R.id.task1);
+//        task1.setOnClickListener((view -> {
+//            String taskTitle = task1.getText().toString();
+//            Intent goToTask1 = new Intent(MainActivity.this , TaskDetail.class);
+//            goToTask1.putExtra("Task Title", taskTitle);
+//            startActivity(goToTask1);
+//        }));
+//
+//        Button task2 = findViewById(R.id.task2);
+//        task2.setOnClickListener((view -> {
+//            String taskTitle = task2.getText().toString();
+//            Intent goToTask2 = new Intent(MainActivity.this , TaskDetail.class);
+//            goToTask2.putExtra("Task Title", taskTitle);
+//            startActivity(goToTask2);
+//        }));
+//
+//        Button task3 = findViewById(R.id.task3);
+//        task3.setOnClickListener((view -> {
+//            String taskTitle = task3.getText().toString();
+//            Intent goToTask3 = new Intent(MainActivity.this , TaskDetail.class);
+//            goToTask3.putExtra("Task Title", taskTitle);
+//            startActivity(goToTask3);
+//        }));
 
     }
 
@@ -109,5 +111,13 @@ public class MainActivity extends AppCompatActivity {
         String username = sharedPreferences.getString("username", "Your task");
         TextView userTasks = findViewById(R.id.UsernameTasks);
         userTasks.setText(username+"’s tasks");
-    }
+
+        // database render
+        TaskDatabase db = Room.databaseBuilder(getApplicationContext(),
+                TaskDatabase.class, "database-name").allowMainThreadQueries().build();
+        TaskDAO taskDao = db.taskDao();
+        List<Task> taskList = taskDao.getAll();
+        RecyclerView taskRec = findViewById(R.id.recycleViewId);
+        taskRec.setLayoutManager(new LinearLayoutManager(this));
+        taskRec.setAdapter(new TaskViewAdapter(taskList));    }
 }

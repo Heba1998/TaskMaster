@@ -79,40 +79,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.757" />
 
-    <Button
-        android:id="@+id/task1"
-        android:layout_width="214dp"
-        android:layout_height="53dp"
-        android:text="@string/task1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.613" />
+<!--    <Button-->
+<!--        android:id="@+id/task1"-->
+<!--        android:layout_width="214dp"-->
+<!--        android:layout_height="53dp"-->
+<!--        android:text="@string/task1"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/toolbar"-->
+<!--        app:layout_constraintVertical_bias="0.613" />-->
 
-    <Button
-        android:id="@+id/task2"
-        android:layout_width="214dp"
-        android:layout_height="53dp"
-        android:text="@string/task2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.683" />
+<!--    <Button-->
+<!--        android:id="@+id/task2"-->
+<!--        android:layout_width="214dp"-->
+<!--        android:layout_height="53dp"-->
+<!--        android:text="@string/task2"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.501"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/toolbar"-->
+<!--        app:layout_constraintVertical_bias="0.683" />-->
 
-    <Button
-        android:id="@+id/task3"
-        android:layout_width="214dp"
-        android:layout_height="53dp"
-        android:text="@string/task3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.754" />
+<!--    <Button-->
+<!--        android:id="@+id/task3"-->
+<!--        android:layout_width="214dp"-->
+<!--        android:layout_height="53dp"-->
+<!--        android:text="@string/task3"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.501"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.754" />-->
 
     <TextView
         android:id="@+id/UsernameTasks"
@@ -128,14 +128,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewId"
-        android:layout_width="399dp"
-        android:layout_height="233dp"
+        android:layout_width="379dp"
+        android:layout_height="378dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.364" />
+        app:layout_constraintVertical_bias="0.498" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
