@@ -35,7 +35,7 @@
 
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/body"
         android:layout_width="316dp"
         android:layout_height="148dp"
         android:text="@string/hard_work_makes_us_strong_as_a_person_when_you_seriously_hard_work_for_prosperity_you_automatically_get_prepared_for_the_worst_there_will_always_be_odds_in_life_but_an_honest_journey_for_success_is_invaluable_because_it_helps_us_live_a_life_as_a_strong_and_independent_person"
@@ -57,6 +57,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.172" />
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/body" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

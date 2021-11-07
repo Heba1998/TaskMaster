@@ -58,3 +58,19 @@
 
 
 ![Homepage](screenshots/HomePage28.png)
+
+
+## **Lab29**
+
+# Homepage:
+
+*Refactor your homepage’s RecyclerView to display all Task entities in your database.*
+
+
+![Homepage](screenshots/HomePage29.png)
+
+
+# Add a Task:
+
+
+![Add a Task](screenshots/AddTask29.png)

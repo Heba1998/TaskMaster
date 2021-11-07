@@ -1,12 +1,14 @@
 package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -20,7 +22,11 @@ public class AddTask extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
-
+//----------------------------------------
+        TaskDatabase db = Room.databaseBuilder(getApplicationContext(),
+                TaskDatabase.class, "database-name").allowMainThreadQueries().build();
+        TaskDAO taskDao = db.taskDao();
+//----------------------------------------------------
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,8 +35,6 @@ public class AddTask extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
 
         TextView textView = findViewById(R.id.textView4);
@@ -42,6 +46,21 @@ public class AddTask extends AppCompatActivity {
             public void onClick(View view) {
                 textView.setText("Total Tasks :"+ counter++);
                 Toast.makeText(getApplicationContext(),  "you added task successfully 📝🖊", Toast.LENGTH_SHORT).show();
+
+                EditText taskTitle = findViewById(R.id.titletask);
+                EditText taskBody = findViewById(R.id.bodytask);
+                EditText taskState = findViewById(R.id.statetask);
+
+                String setTitle = taskTitle.getText().toString();
+                String setBody = taskBody.getText().toString();
+                String setState = taskState.getText().toString();
+
+                Task details = new Task(setTitle , setBody , setState);
+                taskDao.insert(details);
+
+
+
+
             }
         });
 

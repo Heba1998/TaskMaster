@@ -19,7 +19,7 @@ import java.util.List;
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
     List<Task> AllTasks = new ArrayList<>();
 
-    public TaskViewAdapter(ArrayList<Task> AllTasks){
+    public TaskViewAdapter(List<Task> AllTasks){
         this.AllTasks= AllTasks;
     }
 
@@ -64,6 +64,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             public void onClick(View view) {
                 Intent goToDetails = new Intent(view.getContext(), TaskDetail.class);
                 goToDetails.putExtra("Task Title",AllTasks.get(position).getTitle());
+                goToDetails.putExtra("body",AllTasks.get(position).getBody());
+                goToDetails.putExtra("state",AllTasks.get(position).getState());
                 view.getContext().startActivity(goToDetails);
             }
         });
