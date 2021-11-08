@@ -65,7 +65,7 @@ public class AddTask extends AppCompatActivity {
 //                taskDao.insert(details);
 
 
-                com.amplifyframework.datastore.generated.model.Task todo = Task.builder()
+                Task todo = Task.builder()
                         .title(setTitle)
                         .body(setBody)
                         .state(setState)
