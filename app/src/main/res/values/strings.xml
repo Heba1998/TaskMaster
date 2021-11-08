@@ -29,4 +29,9 @@
     <string name="body">Body</string>
     <string name="state">State</string>
     <string name="title">Title</string>
+    <string name="name">Name</string>
+    <string name="add_tasks">Add tasks</string>
+    <string name="all_tasks11">All tasks</string>
+    <string name="settings1">Settings</string>
+    <string name="heba_s_tasks">Heba\'s tasks</string>
 </resources>
