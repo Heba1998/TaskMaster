@@ -156,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
         String username = sharedPreferences.getString("username", "Your task");
         TextView userTasks = findViewById(R.id.UsernameTasks);
         userTasks.setText(username+"’s tasks");
-
+        String team = sharedPreferences.getString("teamName", "teamName");
+        TextView teamName = findViewById(R.id.teamName);
+        teamName.setText(team);
         // database render
 //        TaskDatabase db = Room.databaseBuilder(getApplicationContext(),
 //                TaskDatabase.class, "database-name").allowMainThreadQueries().build();
@@ -165,5 +167,5 @@ public class MainActivity extends AppCompatActivity {
 //        RecyclerView taskRec = findViewById(R.id.recycleViewId);
 //        taskRec.setLayoutManager(new LinearLayoutManager(this));
 //        taskRec.setAdapter(new TaskViewAdapter(taskList));
-        }
+    }
 }

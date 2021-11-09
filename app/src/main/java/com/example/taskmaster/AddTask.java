@@ -10,13 +10,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AddTask extends AppCompatActivity {
@@ -56,19 +62,50 @@ public class AddTask extends AppCompatActivity {
                 EditText taskTitle = findViewById(R.id.titletask);
                 EditText taskBody = findViewById(R.id.bodytask);
                 EditText taskState = findViewById(R.id.statetask);
+                RadioButton Team1 = findViewById(R.id.team1Radio);
+                RadioButton Team2 = findViewById(R.id.team2Radio);
+                RadioButton Team3 = findViewById(R.id.team3Radio);
+
 
                 String setTitle = taskTitle.getText().toString();
                 String setBody = taskBody.getText().toString();
                 String setState = taskState.getText().toString();
+                String setTeam="";
+                if(Team1.isChecked()) {
+                   setTeam="Team1";
+                }else if(Team2.isChecked()){
+                   setTeam = "Team2";
+                }else if(Team3.isChecked()){
+                    setTeam = "Team3";
+                }
 
 //                Task details = new Task(setTitle , setBody , setState);
 //                taskDao.insert(details);
 
+                List<Team> AllTeams = new ArrayList<>();
+                Amplify.API.query(
+                        ModelQuery.list(Team.class),
+                        response -> {
+                            for (Team taskss : response.getData()) {
+                                Log.i("MyAmplifyApp", taskss.getName());
+                                AllTeams.add(taskss);
+
+                            }
+                        },
+                        error -> Log.e("MyAmplifyApp", "Query failure", error)
+                );
+                Team team=null;
+                for (int i = 0; i < AllTeams.size(); i++) {
+                    if(AllTeams.get(i).getName().equals(setTeam)){
+                        team = AllTeams.get(i);
+                    }
+                }
 
                 Task todo = Task.builder()
                         .title(setTitle)
                         .body(setBody)
                         .state(setState)
+                        .team(team)
                         .build();
 
                 Amplify.API.mutate(

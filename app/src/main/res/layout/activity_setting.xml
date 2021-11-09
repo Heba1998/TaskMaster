@@ -66,7 +66,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.67" />
 
     <Button
         android:id="@+id/GoToHomePage"
@@ -79,6 +80,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save"
         app:layout_constraintVertical_bias="0.542" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="126dp"
+        android:layout_height="28dp"
+        android:text="Choose Team"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.412" />
+
+
+    <RadioButton
+        android:id="@+id/team1Radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.477" />
+
+    <RadioButton
+        android:id="@+id/team2Radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.523" />
+
+    <RadioButton
+        android:id="@+id/team3Radio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.569" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
