@@ -6,12 +6,18 @@ import androidx.room.Room;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
+
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
+
 
 public class AddTask extends AppCompatActivity {
 
@@ -55,11 +61,21 @@ public class AddTask extends AppCompatActivity {
                 String setBody = taskBody.getText().toString();
                 String setState = taskState.getText().toString();
 
-                Task details = new Task(setTitle , setBody , setState);
-                taskDao.insert(details);
+//                Task details = new Task(setTitle , setBody , setState);
+//                taskDao.insert(details);
 
 
+                Task todo = Task.builder()
+                        .title(setTitle)
+                        .body(setBody)
+                        .state(setState)
+                        .build();
 
+                Amplify.API.mutate(
+                        ModelMutation.create(todo),
+                        response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
+                        error -> Log.e("MyAmplifyApp", "Create failed", error)
+                );
 
             }
         });

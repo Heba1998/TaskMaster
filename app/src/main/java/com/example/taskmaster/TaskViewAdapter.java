@@ -19,7 +19,7 @@ import java.util.List;
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
     List<Task> AllTasks = new ArrayList<>();
 
-    public TaskViewAdapter(List<Task> AllTasks){
+    public TaskViewAdapter(List<Task> AllTasks, MainActivity mainActivity){
         this.AllTasks= AllTasks;
     }
 

@@ -86,4 +86,17 @@
 ![test](screenshots/Test31.png)
 
 
+## **Lab32**
+
+* Tasks Are Cloudy
+Using the amplify add api command, create a Task resource that replicates our existing Task schema. Update all references to the Task data to instead use AWS Amplify to access your data in DynamoDB instead of in Room.
+
+* Add Task Form
+Modify your Add Task form to save the data entered in as a Task to DynamoDB.
+
+* Homepage
+Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB.
+
+![lab32](screenshots/lab32.png)
+
 

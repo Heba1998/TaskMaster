@@ -18,8 +18,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
-
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -59,9 +57,10 @@ public class ExampleInstrumentedTest {
     @Test
     public void RecyclerViewTest(){
         onView(withId(R.id.recycleViewId)).perform(click());
-        onView(withId(R.id.title)).check(matches(isDisplayed()));
+//        onView(withId(R.id.title1)).check(matches(isDisplayed()));
         onView(withId(R.id.body)).check(matches(isDisplayed()));
         onView(withId(R.id.state)).check(matches(isDisplayed()));
+        onView(withId(R.id.title1)).check(matches(isDisplayed()));
     }
 
 
