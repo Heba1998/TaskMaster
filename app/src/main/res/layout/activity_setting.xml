@@ -93,42 +93,54 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.412" />
 
-
-    <RadioButton
-        android:id="@+id/team1Radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Team1"
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="159dp"
+        android:layout_height="97dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.477" />
+        app:layout_constraintVertical_bias="0.501">
 
-    <RadioButton
-        android:id="@+id/team2Radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Team2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.523" />
+        <RadioButton
+            android:id="@+id/team1Radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.511"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.477" />
 
-    <RadioButton
-        android:id="@+id/team3Radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Team3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.569" />
+        <RadioButton
+            android:id="@+id/team2Radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.511"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.523" />
+
+        <RadioButton
+            android:id="@+id/team3Radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.511"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.569" />
+
+    </RadioGroup>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

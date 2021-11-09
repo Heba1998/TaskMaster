@@ -94,12 +94,21 @@ public class AddTask extends AppCompatActivity {
                         },
                         error -> Log.e("MyAmplifyApp", "Query failure", error)
                 );
+
+
+
+
                 Team team=null;
                 for (int i = 0; i < AllTeams.size(); i++) {
                     if(AllTeams.get(i).getName().equals(setTeam)){
                         team = AllTeams.get(i);
                     }
                 }
+
+//
+//                Team teamm = Team.builder()
+//                        .name((String) setTeam)
+//                        .build();
 
                 Task todo = Task.builder()
                         .title(setTitle)
