@@ -26,6 +26,7 @@ public class FragmentPart extends Fragment {
     private String Body;
     private String State;
 
+
     public FragmentPart() {
         // Required empty public constructor
     }
