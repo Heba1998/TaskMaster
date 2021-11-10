@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 public class Setting extends AppCompatActivity {
@@ -47,10 +49,24 @@ public class Setting extends AppCompatActivity {
         SharedPreferences.Editor welcomeMsg = UserName.edit();
         Button saveButton = findViewById(R.id.save);
         saveButton.setOnClickListener((View -> {
+            Toast.makeText(getApplicationContext(),  "Saved! go to home page to show your name and team", Toast.LENGTH_SHORT).show();
             EditText usernameInput = findViewById(R.id.editPersonName);
             String username = usernameInput.getText().toString();
             welcomeMsg.putString("username",username);
+
+
+            RadioButton Team1= findViewById(R.id.team1Radio);
+            RadioButton Team2= findViewById(R.id.team2Radio);
+            RadioButton Team3= findViewById(R.id.team3Radio);
+            if (Team1.isChecked()){
+                welcomeMsg.putString("teamName", Team1.getText().toString());
+            }else if(Team2.isChecked()){
+                welcomeMsg.putString("teamName", Team2.getText().toString());
+            }else if(Team3.isChecked()){
+                welcomeMsg.putString("teamName", Team3.getText().toString());
+            }
             welcomeMsg.apply();
+
         }));
     }
 }
