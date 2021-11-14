@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
+
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 
 import com.amplifyframework.AmplifyException;
@@ -29,6 +31,7 @@ import com.amplifyframework.core.Amplify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private List<Task> taskList = new ArrayList<>();
@@ -118,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             Amplify.addPlugin(new AWSApiPlugin());
+            // Add this line, to include the Auth plugin.
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -141,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 ModelQuery.list(Task.class),
                 response -> {
                     for (Task todo : response.getData()) {
-                        Task taskOrg = new Task(todo.getId(),todo.getTitle(),todo.getBody(),todo.getState(),todo.getTeam());
+                        Task taskOrg = new Task(todo.getId(),todo.getTitle(),todo.getBody(),todo.getState(), todo.getTeam());
                         Log.i("graph testing", todo.getTitle());
                         taskList.add(taskOrg);
                     }
