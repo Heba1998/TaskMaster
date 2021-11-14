@@ -1,18 +1,16 @@
 package com.example.taskmaster;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.amplifyframework.datastore.generated.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,15 +47,15 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskViewAdapter.TaskViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskViewAdapter.TaskViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.task = AllTasks.get(position);
         TextView title = holder.itemView.findViewById(R.id.titleFragment);
         TextView body = holder.itemView.findViewById(R.id.bodyFragment);
         TextView state = holder.itemView.findViewById(R.id.stateFragment);
 
-        title.setText(holder.task.title);
-        body.setText(holder.task.body);
-        state.setText(holder.task.state);
+        title.setText(holder.task.getTitle());
+        body.setText(holder.task.getBody());
+        state.setText(holder.task.getState());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

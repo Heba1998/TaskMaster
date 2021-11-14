@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
+import com.amplifyframework.datastore.generated.model.Task;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
@@ -137,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Amplify.API.query(
-                ModelQuery.list(com.amplifyframework.datastore.generated.model.Task.class),
+                ModelQuery.list(Task.class),
                 response -> {
-                    for (com.amplifyframework.datastore.generated.model.Task todo : response.getData()) {
-                        Task taskOrg = new Task(todo.getTitle(),todo.getBody(),todo.getState());
+                    for (Task todo : response.getData()) {
+                        Task taskOrg = new Task(todo.getId(),todo.getTitle(),todo.getBody(),todo.getState(),todo.getTeam());
                         Log.i("graph testing", todo.getTitle());
                         taskList.add(taskOrg);
                     }

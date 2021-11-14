@@ -48,19 +48,19 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void AllTasksTest() {
-        onView(withId(R.id.all)).check(matches(isDisplayed())).perform(click());
-        onView(withText("All Tasks")).check(matches(isDisplayed()));
-        onView(withId(R.id.Home)).check(matches(isDisplayed())).perform(click());
-    }
-
-    @Test
     public void RecyclerViewTest(){
         onView(withId(R.id.recycleViewId)).perform(click());
 //        onView(withId(R.id.title1)).check(matches(isDisplayed()));
         onView(withId(R.id.body)).check(matches(isDisplayed()));
         onView(withId(R.id.state)).check(matches(isDisplayed()));
         onView(withId(R.id.title1)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void AllTasksTest() {
+        onView(withId(R.id.all)).check(matches(isDisplayed())).perform(click());
+        onView(withText("All Tasks")).check(matches(isDisplayed()));
+        onView(withId(R.id.Home)).check(matches(isDisplayed())).perform(click());
     }
 
 
