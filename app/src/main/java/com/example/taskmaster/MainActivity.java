@@ -26,6 +26,7 @@ import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
             // Add this line, to include the Auth plugin.
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             // ----------------lab36---------------------------------
+
+            // ----------------lab37---------------------------------
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+            // ----------------lab37---------------------------------
 
 
             Amplify.configure(getApplicationContext());

@@ -14,9 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 
 public class AddTask extends AppCompatActivity {
@@ -33,6 +41,31 @@ public class AddTask extends AppCompatActivity {
                 TaskDatabase.class, "database-name").allowMainThreadQueries().build();
         TaskDAO taskDao = db.taskDao();
 //----------------------------------------------------
+
+
+        try {
+
+            Amplify.addPlugin(new AWSApiPlugin());
+
+            // ----------------lab36---------------------------------
+            // Add this line, to include the Auth plugin.
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            // ----------------lab36---------------------------------
+
+            // ----------------lab37---------------------------------
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+            // ----------------lab37---------------------------------
+
+
+            Amplify.configure(getApplicationContext());
+
+            Log.i("MyAmplifyApp", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+        }
+
+
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +74,7 @@ public class AddTask extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
         TextView textView = findViewById(R.id.textView4);
@@ -80,5 +114,32 @@ public class AddTask extends AppCompatActivity {
             }
         });
 
+        Button upload = findViewById(R.id.upload);
+       upload.setOnClickListener(view -> {
+
+           uploadFile();
+           Toast.makeText(getApplicationContext(),  "I hate you", Toast.LENGTH_SHORT).show();
+
+       });
+
+    }
+
+    private void uploadFile() {
+        File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
+            writer.append("I HATE ERRORRRORORORORORROROROS");
+            writer.close();
+        } catch (Exception exception) {
+            Log.e("MyAmplifyApp", "Upload failed", exception);
+        }
+
+        Amplify.Storage.uploadFile(
+                "ExampleKey",
+                exampleFile,
+                result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+        );
     }
 }
