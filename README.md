@@ -100,6 +100,9 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
 ![lab32](screenshots/lab32.png)
 
 
+## **Lab34**
+
+* App APK
 
 
 ## **Lab36**
@@ -120,3 +123,7 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
 * Sign in page
 
 ![](screenshots/signin.png)
+
+
+
+
