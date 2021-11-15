@@ -100,3 +100,23 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
 ![lab32](screenshots/lab32.png)
 
 
+
+
+## **Lab36**
+
+* Sign up page
+
+![](screenshots/SignUp.png)
+
+* Confirm page
+
+![](screenshots/Confirm.png)
+
+* Main page
+
+![](screenshots/main36.png)
+
+
+* Sign in page
+
+![](screenshots/signin.png)
