@@ -24,6 +24,7 @@ import android.widget.Toolbar;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 
 import java.util.ArrayList;
@@ -117,6 +118,13 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             Amplify.addPlugin(new AWSApiPlugin());
+
+            // ----------------lab36---------------------------------
+            // Add this line, to include the Auth plugin.
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            // ----------------lab36---------------------------------
+
+
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -147,6 +155,19 @@ public class MainActivity extends AppCompatActivity {
                     handler.sendEmptyMessage(1);
                 }, error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
+
+
+        Button logOut = findViewById(R.id.logout);
+        logOut.setOnClickListener(view -> {
+            Amplify.Auth.signOut(
+                    () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                    error -> Log.e("not complemte", error.toString())
+            );
+
+            Intent intent = new Intent(MainActivity.this, SignIn.class);
+            startActivity(intent);
+        });
+
     }
 
     @Override
@@ -156,6 +177,10 @@ public class MainActivity extends AppCompatActivity {
         String username = sharedPreferences.getString("username", "Your task");
         TextView userTasks = findViewById(R.id.UsernameTasks);
         userTasks.setText(username+"’s tasks");
+
+        String username1 = sharedPreferences.getString("username22", "Your email");
+        TextView useremail = findViewById(R.id.username22);
+        useremail.setText("User Name: "+username1);
 
         // database render
 //        TaskDatabase db = Room.databaseBuilder(getApplicationContext(),
