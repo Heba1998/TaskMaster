@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 response -> {
                     for (com.amplifyframework.datastore.generated.model.Task todo : response.getData()) {
 //                        com.amplifyframework.datastore.generated.model.Task taskOrg = new Task(todo.getTitle(),todo.getBody(),todo.getState());
-                        Log.i("graph testing", todo.getTitle());
+                        Log.i("graph testing", todo.getTitle()+ "todo" + todo);
                         taskList.add(todo);
                     }
                     handler.sendEmptyMessage(1);

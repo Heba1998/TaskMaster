@@ -50,21 +50,35 @@ public class TaskDetail extends AppCompatActivity {
         TextView state = findViewById(R.id.state);
         state.setText(taskState);
 
-        ImageView imageView= findViewById(R.id.imageView);
-        if (intent.getExtras().getString("img")!=null){
-            Amplify.Storage.downloadFile(
-                    intent.getExtras().getString("img"),
-                    new File(getApplicationContext().getFilesDir()+ "/" + intent.getExtras().getString("img") + ".jpg"),
-                    response->{
-                        Bitmap bitmap = BitmapFactory.decodeFile(response.getFile().getPath());
-                        imageView.setImageBitmap(bitmap);
-                        Log.i("TaskDetailsPageImage", "Successfully downloaded: " + response.getFile().getName());
-                    },
-                    error->{
-                        Log.i("TaskDetailsPageImage", "Failed to download: " + error);
-                    }
-            );
-        }
+//        ImageView imageView= findViewById(R.id.imageView);
+//        if (intent.getExtras().getString("image")!=null){
+//            Amplify.Storage.downloadFile(
+//                    intent.getExtras().getString("image"),
+//                    new File(getApplicationContext().getFilesDir()+ "/" + intent.getExtras().getString("image")+".jpg"),
+//                    response->{
+//
+//                        Bitmap bitmap = BitmapFactory.decodeFile(response.getFile().getPath());
+//                        imageView.setImageBitmap(bitmap);
+//                        Log.i("TaskDetailsPageImage", "Successfully downloaded: " + response.getFile().getName());
+//                    },
+//                    error->{
+//                        Log.i("testing", "onCreate: "+  intent.getExtras().getString("image"));
+//                        Log.i("TaskDetailsPageImage", "Failed to download: " + error);
+//                    }
+//            );
+//
+//            Amplify.Storage.downloadFile(
+//                    intent.getExtras().getString("image"),
+//                    new File(getApplicationContext().getFilesDir() +"/image.jpg"),
+//                    result -> {
+//                        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+////                        ImageView imageView = findViewById(R.id.imageView);
+//                        File newImg = result.getFile();
+//                        imageView.setImageBitmap(BitmapFactory.decodeFile(String.valueOf(newImg)));
+//
+//                        Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile());},
+//                    error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+//            );
     }
 
     @Override

@@ -70,7 +70,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
                 goToDetails.putExtra("body",AllTasks.get(position).getBody());
                 goToDetails.putExtra("state",AllTasks.get(position).getState());
                 goToDetails.putExtra("image",AllTasks.get(position).getImage());
-
+                Log.i("TAG", "onClick: this is the go to details " + goToDetails + "this is all tasks:     " + AllTasks);
                 view.getContext().startActivity(goToDetails);
             }
         });

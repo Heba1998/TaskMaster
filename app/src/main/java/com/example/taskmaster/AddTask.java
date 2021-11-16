@@ -84,13 +84,9 @@ public class AddTask extends AppCompatActivity {
         });
 
         Button uploadImg = findViewById(R.id.upload);
-        uploadImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadInputStream();
-                fileChoose();
-
-            }
+        uploadImg.setOnClickListener(view -> {
+            uploadInputStream();
+            fileChoose();
         });
 
 
@@ -141,6 +137,16 @@ public class AddTask extends AppCompatActivity {
 
         File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFileCopied");
         try {
+//            Amplify.addPlugin(new AWSApiPlugin());
+//
+//            // ----------------lab36---------------------------------
+//            // Add this line, to include the Auth plugin.
+//            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+//            // ----------------lab36---------------------------------
+//            // ----------------lab37---------------------------------
+//            Amplify.addPlugin(new AWSS3StoragePlugin());
+//            // ----------------lab37---------------------------------
+//            Amplify.configure(getApplicationContext());
             InputStream exampleInputStream = getContentResolver().openInputStream(data.getData());
             OutputStream outputStream = new FileOutputStream(uploadFile);
             imageName = data.getData().toString();
@@ -152,7 +158,7 @@ public class AddTask extends AppCompatActivity {
             exampleInputStream.close();
             outputStream.close();
             Amplify.Storage.uploadFile(
-                    "image",
+                    "image"+".jpg",
                     uploadFile,
                     result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
                     storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
@@ -161,14 +167,6 @@ public class AddTask extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    public void fileChoose(){
-        Intent fileChoose=new Intent(Intent.ACTION_GET_CONTENT);
-        fileChoose.setType("*/*");
-        fileChoose=Intent.createChooser(fileChoose,"choose file");
-        startActivityForResult(fileChoose,1234);
-    }
-
     private void uploadInputStream() {
         if (uri!= null) {
 
@@ -187,4 +185,13 @@ public class AddTask extends AppCompatActivity {
             }
         }
     }
+
+
+    public void fileChoose(){
+        Intent fileChoose=new Intent(Intent.ACTION_GET_CONTENT);
+        fileChoose.setType("*/*");
+        fileChoose=Intent.createChooser(fileChoose,"choose file");
+        startActivityForResult(fileChoose,1234);
+    }
+
 }
