@@ -1,10 +1,12 @@
 package com.example.taskmaster;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,11 +26,17 @@ import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 public class AddTask extends AppCompatActivity {
-
+    String imageName="";
+    public Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +83,15 @@ public class AddTask extends AppCompatActivity {
             }
         });
 
+        Button uploadImg = findViewById(R.id.upload);
+        uploadImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadInputStream();
+                fileChoose();
+
+            }
+        });
 
 
         TextView textView = findViewById(R.id.textView4);
@@ -103,6 +120,7 @@ public class AddTask extends AppCompatActivity {
                         .title(setTitle)
                         .body(setBody)
                         .state(setState)
+                        .image(imageName)
                         .build();
 
                 Amplify.API.mutate(
@@ -114,32 +132,59 @@ public class AddTask extends AppCompatActivity {
             }
         });
 
-        Button upload = findViewById(R.id.upload);
-       upload.setOnClickListener(view -> {
-
-           uploadFile();
-           Toast.makeText(getApplicationContext(),  "I hate you", Toast.LENGTH_SHORT).show();
-
-       });
 
     }
 
-    private void uploadFile() {
-        File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFileCopied");
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
-            writer.append("I HATE ERRORRRORORORORORROROROS");
-            writer.close();
-        } catch (Exception exception) {
-            Log.e("MyAmplifyApp", "Upload failed", exception);
+            InputStream exampleInputStream = getContentResolver().openInputStream(data.getData());
+            OutputStream outputStream = new FileOutputStream(uploadFile);
+            imageName = data.getData().toString();
+            byte[] buff = new byte[1024];
+            int length;
+            while ((length = exampleInputStream.read(buff)) > 0) {
+                outputStream.write(buff, 0, length);
+            }
+            exampleInputStream.close();
+            outputStream.close();
+            Amplify.Storage.uploadFile(
+                    "image",
+                    uploadFile,
+                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
-        Amplify.Storage.uploadFile(
-                "ExampleKey",
-                exampleFile,
-                result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
-                storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
-        );
+    public void fileChoose(){
+        Intent fileChoose=new Intent(Intent.ACTION_GET_CONTENT);
+        fileChoose.setType("*/*");
+        fileChoose=Intent.createChooser(fileChoose,"choose file");
+        startActivityForResult(fileChoose,1234);
+    }
+
+    private void uploadInputStream() {
+        if (uri!= null) {
+
+
+            try {
+                InputStream exampleInputStream = getContentResolver().openInputStream(uri);
+
+                Amplify.Storage.uploadInputStream(
+                        imageName,
+                        exampleInputStream,
+                        result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                        storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+                );
+            } catch (FileNotFoundException error) {
+                Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
+            }
+        }
     }
 }
