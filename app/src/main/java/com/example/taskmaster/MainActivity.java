@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,21 +16,21 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Task> taskList = new ArrayList<>();
+    private List<com.amplifyframework.datastore.generated.model.Task> taskList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             // ----------------lab36---------------------------------
 
+            // ----------------lab37---------------------------------
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+            // ----------------lab37---------------------------------
+
 
             Amplify.configure(getApplicationContext());
 
@@ -148,9 +151,9 @@ public class MainActivity extends AppCompatActivity {
                 ModelQuery.list(com.amplifyframework.datastore.generated.model.Task.class),
                 response -> {
                     for (com.amplifyframework.datastore.generated.model.Task todo : response.getData()) {
-                        Task taskOrg = new Task(todo.getTitle(),todo.getBody(),todo.getState());
-                        Log.i("graph testing", todo.getTitle());
-                        taskList.add(taskOrg);
+//                        com.amplifyframework.datastore.generated.model.Task taskOrg = new Task(todo.getTitle(),todo.getBody(),todo.getState());
+                        Log.i("graph testing", todo.getTitle()+ "todo" + todo);
+                        taskList.add(todo);
                     }
                     handler.sendEmptyMessage(1);
                 }, error -> Log.e("MyAmplifyApp", "Query failure", error)

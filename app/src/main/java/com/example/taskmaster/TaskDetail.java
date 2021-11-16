@@ -3,10 +3,18 @@ package com.example.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
+
+import com.amplifyframework.core.Amplify;
+
+import java.io.File;
 
 public class TaskDetail extends AppCompatActivity {
 
@@ -42,6 +50,35 @@ public class TaskDetail extends AppCompatActivity {
         TextView state = findViewById(R.id.state);
         state.setText(taskState);
 
+        ImageView imageView= findViewById(R.id.imageView);
+        if (intent.getExtras().getString("image")!=null){
+            Amplify.Storage.downloadFile(
+                    intent.getExtras().getString("image"),
+                    new File(getApplicationContext().getFilesDir()+ "/" + intent.getExtras().getString("image")+".jpg"),
+                    response->{
+
+                        Bitmap bitmap = BitmapFactory.decodeFile(response.getFile().getPath());
+                        imageView.setImageBitmap(bitmap);
+                        Log.i("TaskDetailsPageImage", "Successfully downloaded: " + response.getFile().getName());
+                    },
+                    error->{
+                        Log.i("testing", "onCreate: "+  intent.getExtras().getString("image"));
+                        Log.i("TaskDetailsPageImage", "Failed to download: " + error);
+                    }
+            );
+        }
+
+//        Amplify.Storage.downloadFile(
+//                intent.getExtras().getString("imgName"),
+//                new File(getApplicationContext().getFilesDir() + "/download.jpg"),
+//                result -> {
+//                    ImageView imageView = findViewById(R.id.imageView);
+//                    String newImg = result.getFile().getPath();
+//                    imageView.setImageBitmap(BitmapFactory.decodeFile(newImg));
+//
+//                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile());},
+//                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
+//        );
     }
 
     @Override

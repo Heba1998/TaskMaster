@@ -126,4 +126,10 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
 
 
 
+## **Lab37**
 
+* **Uploads**
+*On the `Add a Task` activity, allow users to optionally select a file to attach to that task. If a user attaches a file to a task, that file should be uploaded to S3, and associated with that task.*
+
+* **Displaying Files**
+*On the `Task detail` activity, if there is a file that is an image associated with a particular Task, that image should be displayed within that activity.*

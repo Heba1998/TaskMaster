@@ -1,6 +1,7 @@
 package com.example.taskmaster;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.amplifyframework.datastore.generated.model.Task;
+
 
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
-    List<Task> AllTasks = new ArrayList<>();
+    List<com.amplifyframework.datastore.generated.model.Task> AllTasks = new ArrayList<>();
 
-    public TaskViewAdapter(List<Task> AllTasks, MainActivity mainActivity){
+    public TaskViewAdapter(List<com.amplifyframework.datastore.generated.model.Task> AllTasks, MainActivity mainActivity){
         this.AllTasks= AllTasks;
     }
 
@@ -49,15 +52,15 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskViewAdapter.TaskViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskViewAdapter.TaskViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.task = AllTasks.get(position);
         TextView title = holder.itemView.findViewById(R.id.titleFragment);
         TextView body = holder.itemView.findViewById(R.id.bodyFragment);
         TextView state = holder.itemView.findViewById(R.id.stateFragment);
 
-        title.setText(holder.task.title);
-        body.setText(holder.task.body);
-        state.setText(holder.task.state);
+        title.setText(holder.task.getTitle());
+        body.setText(holder.task.getBody());
+        state.setText(holder.task.getState());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +69,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
                 goToDetails.putExtra("Task Title",AllTasks.get(position).getTitle());
                 goToDetails.putExtra("body",AllTasks.get(position).getBody());
                 goToDetails.putExtra("state",AllTasks.get(position).getState());
+                goToDetails.putExtra("image",AllTasks.get(position).getImage());
+                Log.i("TAG", "onClick: this is the go to details " + goToDetails + "this is all tasks:     " + AllTasks);
                 view.getContext().startActivity(goToDetails);
             }
         });

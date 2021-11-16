@@ -43,5 +43,11 @@
         ]
       }
     }
+  },
+  "storage": {
+    "s386b2b97d": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

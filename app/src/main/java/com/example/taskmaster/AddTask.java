@@ -1,10 +1,12 @@
 package com.example.taskmaster;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,13 +16,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 public class AddTask extends AppCompatActivity {
-
+    String imageName="";
+    public Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +49,31 @@ public class AddTask extends AppCompatActivity {
                 TaskDatabase.class, "database-name").allowMainThreadQueries().build();
         TaskDAO taskDao = db.taskDao();
 //----------------------------------------------------
+
+
+        try {
+
+            Amplify.addPlugin(new AWSApiPlugin());
+
+            // ----------------lab36---------------------------------
+            // Add this line, to include the Auth plugin.
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            // ----------------lab36---------------------------------
+
+            // ----------------lab37---------------------------------
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+            // ----------------lab37---------------------------------
+
+
+            Amplify.configure(getApplicationContext());
+
+            Log.i("MyAmplifyApp", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+        }
+
+
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +81,12 @@ public class AddTask extends AppCompatActivity {
                 Intent intent   = new Intent(AddTask.this, MainActivity.class);
                 startActivity(intent);
             }
+        });
+
+        Button uploadImg = findViewById(R.id.upload);
+        uploadImg.setOnClickListener(view -> {
+            uploadInputStream();
+            fileChoose();
         });
 
 
@@ -69,6 +116,7 @@ public class AddTask extends AppCompatActivity {
                         .title(setTitle)
                         .body(setBody)
                         .state(setState)
+                        .image(imageName)
                         .build();
 
                 Amplify.API.mutate(
@@ -80,5 +128,70 @@ public class AddTask extends AppCompatActivity {
             }
         });
 
+
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFileCopied");
+        try {
+//            Amplify.addPlugin(new AWSApiPlugin());
+//
+//            // ----------------lab36---------------------------------
+//            // Add this line, to include the Auth plugin.
+//            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+//            // ----------------lab36---------------------------------
+//            // ----------------lab37---------------------------------
+//            Amplify.addPlugin(new AWSS3StoragePlugin());
+//            // ----------------lab37---------------------------------
+//            Amplify.configure(getApplicationContext());
+            InputStream exampleInputStream = getContentResolver().openInputStream(data.getData());
+            OutputStream outputStream = new FileOutputStream(uploadFile);
+            imageName = data.getData().toString();
+            byte[] buff = new byte[1024];
+            int length;
+            while ((length = exampleInputStream.read(buff)) > 0) {
+                outputStream.write(buff, 0, length);
+            }
+            exampleInputStream.close();
+            outputStream.close();
+            Amplify.Storage.uploadFile(
+                    "image"+".jpg",
+                    uploadFile,
+                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                    storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void uploadInputStream() {
+        if (uri!= null) {
+
+
+            try {
+                InputStream exampleInputStream = getContentResolver().openInputStream(uri);
+
+                Amplify.Storage.uploadInputStream(
+                        imageName,
+                        exampleInputStream,
+                        result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                        storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+                );
+            } catch (FileNotFoundException error) {
+                Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
+            }
+        }
+    }
+
+
+    public void fileChoose(){
+        Intent fileChoose=new Intent(Intent.ACTION_GET_CONTENT);
+        fileChoose.setType("*/*");
+        fileChoose=Intent.createChooser(fileChoose,"choose file");
+        startActivityForResult(fileChoose,1234);
+    }
+
 }
