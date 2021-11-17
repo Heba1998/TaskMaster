@@ -34,4 +34,6 @@
     <string name="all_tasks11">All tasks</string>
     <string name="settings1">Settings</string>
     <string name="heba_s_tasks">Heba\'s tasks</string>
+    <string name="channel_name">task1</string>
+    <string name="channel_description">task2</string>
 </resources>
