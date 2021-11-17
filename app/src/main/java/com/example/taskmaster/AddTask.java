@@ -6,8 +6,10 @@ import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,8 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,11 +36,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AddTask extends AppCompatActivity {
-    String imageName="";
+    private static final String TAG = AddTask.class.getName();
+    String imageName = "";
     public Uri uri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +57,7 @@ public class AddTask extends AppCompatActivity {
                 TaskDatabase.class, "database-name").allowMainThreadQueries().build();
         TaskDAO taskDao = db.taskDao();
 //----------------------------------------------------
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         try {
 
@@ -73,32 +81,33 @@ public class AddTask extends AppCompatActivity {
         }
 
 
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent   = new Intent(AddTask.this, MainActivity.class);
+                Intent intent = new Intent(AddTask.this, MainActivity.class);
                 startActivity(intent);
             }
         });
 
         Button uploadImg = findViewById(R.id.upload);
         uploadImg.setOnClickListener(view -> {
-            uploadInputStream();
             fileChoose();
+            uploadInputStream();
+
         });
 
 
         TextView textView = findViewById(R.id.textView4);
         Button button = findViewById(R.id.Button3);
         button.setOnClickListener(new View.OnClickListener() {
-            int counter = 0 ;
+            int counter = 0;
+
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                textView.setText("Total Tasks :"+ counter++);
-                Toast.makeText(getApplicationContext(),  "you added task successfully 📝🖊", Toast.LENGTH_SHORT).show();
+                textView.setText("Total Tasks :" + counter++);
+                Toast.makeText(getApplicationContext(), "you added task successfully 📝🖊", Toast.LENGTH_SHORT).show();
 
                 EditText taskTitle = findViewById(R.id.titletask);
                 EditText taskBody = findViewById(R.id.bodytask);
@@ -107,6 +116,7 @@ public class AddTask extends AppCompatActivity {
                 String setTitle = taskTitle.getText().toString();
                 String setBody = taskBody.getText().toString();
                 String setState = taskState.getText().toString();
+                String imageURl = sharedPreferences.getString("FileUrlForReal", "no files");
 
 //                Task details = new Task(setTitle , setBody , setState);
 //                taskDao.insert(details);
@@ -116,7 +126,7 @@ public class AddTask extends AppCompatActivity {
                         .title(setTitle)
                         .body(setBody)
                         .state(setState)
-                        .image(imageName)
+                        .image(imageURl)
                         .build();
 
                 Amplify.API.mutate(
@@ -135,7 +145,10 @@ public class AddTask extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        File uploadFile = new File(getApplicationContext().getFilesDir(), "uploadFileCopied");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String fileName = sdf.format(new Date());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        File uploadFile = new File(getApplicationContext().getFilesDir(), fileName);
         try {
 //            Amplify.addPlugin(new AWSApiPlugin());
 //
@@ -158,19 +171,25 @@ public class AddTask extends AppCompatActivity {
             exampleInputStream.close();
             outputStream.close();
             Amplify.Storage.uploadFile(
-                    "image"+".jpg",
+                    fileName + ".jpg",
                     uploadFile,
-                    result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                    result -> {
+                        Log.i("MyAmplifyAppUpload", "Successfully uploaded: " + result.getKey());
+                        Amplify.Storage.getUrl(result.getKey(), urlResult -> {
+                            sharedPreferences.edit().putString("FileUrlForReal", urlResult.getUrl().toString()).apply();
+                        }, urlError -> {
+                            Log.e(TAG, "onActivityResult: Error please dont be mad");
+                        });
+                    },
                     storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
             );
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     private void uploadInputStream() {
-        if (uri!= null) {
-
-
+        if (uri != null) {
             try {
                 InputStream exampleInputStream = getContentResolver().openInputStream(uri);
 
@@ -187,11 +206,11 @@ public class AddTask extends AppCompatActivity {
     }
 
 
-    public void fileChoose(){
-        Intent fileChoose=new Intent(Intent.ACTION_GET_CONTENT);
+    public void fileChoose() {
+        Intent fileChoose = new Intent(Intent.ACTION_GET_CONTENT);
         fileChoose.setType("*/*");
-        fileChoose=Intent.createChooser(fileChoose,"choose file");
-        startActivityForResult(fileChoose,1234);
+        fileChoose = Intent.createChooser(fileChoose, "choose file");
+        startActivityForResult(fileChoose, 1234);
     }
 
 }

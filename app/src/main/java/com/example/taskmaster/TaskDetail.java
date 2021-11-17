@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.amplifyframework.core.Amplify;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -50,23 +51,12 @@ public class TaskDetail extends AppCompatActivity {
         TextView state = findViewById(R.id.state);
         state.setText(taskState);
 
-        ImageView imageView= findViewById(R.id.imageView);
-        if (intent.getExtras().getString("image")!=null){
-            Amplify.Storage.downloadFile(
-                    intent.getExtras().getString("image"),
-                    new File(getApplicationContext().getFilesDir()+ "/" + intent.getExtras().getString("image")+".jpg"),
-                    response->{
 
-                        Bitmap bitmap = BitmapFactory.decodeFile(response.getFile().getPath());
-                        imageView.setImageBitmap(bitmap);
-                        Log.i("TaskDetailsPageImage", "Successfully downloaded: " + response.getFile().getName());
-                    },
-                    error->{
-                        Log.i("testing", "onCreate: "+  intent.getExtras().getString("image"));
-                        Log.i("TaskDetailsPageImage", "Failed to download: " + error);
-                    }
-            );
-        }
+        String url = intent.getExtras().getString("image");
+        Log.i("url", "onCreate: "+ url);
+        ImageView image = findViewById(R.id.imageview);
+        Log.i("url", "onCreate: "+ image.getId());
+        Picasso.get().load(url).into(image);
 
 //        Amplify.Storage.downloadFile(
 //                intent.getExtras().getString("imgName"),

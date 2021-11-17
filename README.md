@@ -134,7 +134,7 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
 * **Displaying Files**
 *On the `Task detail` activity, if there is a file that is an image associated with a particular Task, that image should be displayed within that activity.*
 
-
+![](screenshots/lab37.png)
 
 ## **Lab38**
 
