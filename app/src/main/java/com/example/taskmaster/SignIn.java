@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toolbar;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
@@ -58,7 +59,7 @@ public class SignIn extends AppCompatActivity {
 
         Button signIn = findViewById(R.id.signinbutton);
         signIn.setOnClickListener(view -> {
-
+            Action();
             Amplify.Auth.signIn(
                     email.getText().toString(),
                     password.getText().toString(),
@@ -78,5 +79,15 @@ public class SignIn extends AppCompatActivity {
 
         });
 
+    }
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SignIn.this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

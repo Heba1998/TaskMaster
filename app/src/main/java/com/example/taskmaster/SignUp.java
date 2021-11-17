@@ -63,23 +63,10 @@ public class SignUp extends AppCompatActivity {
             Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
         }
 
-        // --------------lab39----------------------------------------------
-        AnalyticsEvent event = AnalyticsEvent.builder()
-                .name("PasswordReset")
-                .addProperty("Channel", "SMS")
-                .addProperty("Successful", true)
-                .addProperty("ProcessDuration", 792)
-                .addProperty("UserAge", 120.3)
-                .build();
-
-        Amplify.Analytics.recordEvent(event);
-
-        // --------------lab39----------------------------------------------
-
-
 
         Button signUp = findViewById(R.id.signupButton);
         signUp.setOnClickListener(view -> {
+            Action();
             Amplify.Auth.fetchAuthSession(
                     result -> Log.i("AmplifyQuickstart", result.toString()),
                     error -> Log.e("AmplifyQuickstart", error.toString())
@@ -102,6 +89,7 @@ public class SignUp extends AppCompatActivity {
 
         Button signIn = findViewById(R.id.signinbutton1);
         signIn.setOnClickListener(view -> {
+            Action();
             Intent intent = new Intent(SignUp.this,SignIn.class);
             startActivity(intent);
         });
@@ -120,5 +108,15 @@ public class SignUp extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SignUp.this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

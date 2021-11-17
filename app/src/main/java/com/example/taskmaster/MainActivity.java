@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         allTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToAllTasks = new Intent(MainActivity.this, AllTasks.class);
                 startActivity(goToAllTasks);
             }
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         addtask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToAddTask = new Intent(MainActivity.this,  AddTask.class);
                 startActivity(goToAddTask);
             }
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToSettings = new Intent(MainActivity.this,  Setting.class);
                 startActivity(goToSettings);
             }
@@ -190,51 +193,12 @@ public class MainActivity extends AppCompatActivity {
                     () -> Log.i("AuthQuickstart", "Signed out successfully"),
                     error -> Log.e("not complemte", error.toString())
             );
-
+            Action();
             Intent intent = new Intent(MainActivity.this, SignIn.class);
             startActivity(intent);
         });
 
 
-        AnalyticsEvent event = AnalyticsEvent.builder()
-                .name("PasswordReset")
-                .addProperty("Channel", "SMS")
-                .addProperty("Successful", true)
-                .addProperty("ProcessDuration", 792)
-                .addProperty("UserAge", 120.3)
-                .build();
-
-        Amplify.Analytics.recordEvent(event);
-
-        UserProfile.Location location = UserProfile.Location.builder()
-                .latitude(31.992079)
-                .longitude(35.845488)
-                .postalCode("542546")
-                .city("zarqa")
-                .region("36 street")
-                .country("Jordan")
-                .build();
-
-        AnalyticsProperties customProperties = AnalyticsProperties.builder()
-                .add("property1", "Property value")
-                .build();
-
-        AnalyticsProperties userAttributes = AnalyticsProperties.builder()
-                .add("someUserAttribute", "User attribute value")
-                .build();
-
-        AWSPinpointUserProfile profile = AWSPinpointUserProfile.builder()
-                .name("Heba AL-Momani")
-                .email("hebaalmomani1998@gmail.com")
-                .plan("I'm so tired")
-                .location(location)
-                .customProperties(customProperties)
-                .userAttributes(userAttributes)
-                .build();
-
-        String userId = Amplify.Auth.getCurrentUser().getUserId();
-
-        Amplify.Analytics.identifyUser(userId, profile);
     }
 
     @Override
@@ -307,5 +271,17 @@ public class MainActivity extends AppCompatActivity {
         targetingClient.updateEndpointProfile(endpointProfile);
         Log.d(TAG, "Assigned user ID " + endpointProfileUser.getUserId() +
                 " to endpoint " + endpointProfile.getEndpointId());
+    }
+
+
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }
