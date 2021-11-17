@@ -32,7 +32,7 @@ public class SignUpConfirm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent   = new Intent(SignUpConfirm.this, MainActivity.class);
+                Intent intent   = new Intent(SignUpConfirm.this, SignUp.class);
                 startActivity(intent);
             }
         });

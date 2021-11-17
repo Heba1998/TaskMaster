@@ -1,0 +1,22 @@
+{
+    "appName": "TaskMasterRQh3P",
+    "roleName": "pinpointLambdaRoleda5ca496",
+    "cloudformationPolicyName": "cloudformationPolicyda5ca496",
+    "cloudWatchPolicyName": "cloudWatchPolicyda5ca496",
+    "pinpointPolicyName": "pinpointPolicyda5ca496",
+    "authPolicyName": "pinpoint_amplify_da5ca496",
+    "unauthPolicyName": "pinpoint_amplify_da5ca496",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "appId": "1a03d241218d4136ae7d88d984489144"
+}

@@ -141,3 +141,12 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
 * Sign up page
 
 ![](screenshots/notification.png)
+
+
+
+## **Lab39**
+
+* Tracking Users
+  *Add Analytics to your amplify project. Create and send an Event whenever you launch intents that start new activities.*
+
+![](screenshots/lab39.png)
