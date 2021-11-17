@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Toolbar;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.analytics.AnalyticsEvent;
+import com.amplifyframework.analytics.pinpoint.AWSPinpointAnalyticsPlugin;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
@@ -53,6 +55,7 @@ public class SignUp extends AppCompatActivity {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.addPlugin(new AWSS3StoragePlugin());
+            Amplify.addPlugin(new AWSPinpointAnalyticsPlugin(getApplication()));
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -63,6 +66,7 @@ public class SignUp extends AppCompatActivity {
 
         Button signUp = findViewById(R.id.signupButton);
         signUp.setOnClickListener(view -> {
+            Action();
             Amplify.Auth.fetchAuthSession(
                     result -> Log.i("AmplifyQuickstart", result.toString()),
                     error -> Log.e("AmplifyQuickstart", error.toString())
@@ -85,6 +89,7 @@ public class SignUp extends AppCompatActivity {
 
         Button signIn = findViewById(R.id.signinbutton1);
         signIn.setOnClickListener(view -> {
+            Action();
             Intent intent = new Intent(SignUp.this,SignIn.class);
             startActivity(intent);
         });
@@ -103,5 +108,15 @@ public class SignUp extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SignUp.this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

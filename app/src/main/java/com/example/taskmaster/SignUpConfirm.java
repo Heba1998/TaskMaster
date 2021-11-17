@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toolbar;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
@@ -32,7 +33,7 @@ public class SignUpConfirm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent   = new Intent(SignUpConfirm.this, MainActivity.class);
+                Intent intent   = new Intent(SignUpConfirm.this, SignUp.class);
                 startActivity(intent);
             }
         });
@@ -53,6 +54,7 @@ public class SignUpConfirm extends AppCompatActivity {
 
         Button confirm = findViewById(R.id.Confirm);
         confirm.setOnClickListener(view -> {
+            Action();
             Amplify.Auth.confirmSignUp(
                     email.getText().toString(),
                     code.getText().toString(),
@@ -78,5 +80,16 @@ public class SignUpConfirm extends AppCompatActivity {
 
 
 
+    }
+
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SignUpConfirm.this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

@@ -29,6 +29,11 @@ import com.amazonaws.mobileconnectors.pinpoint.targeting.TargetingClient;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfile;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfileUser;
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.analytics.AnalyticsEvent;
+import com.amplifyframework.analytics.AnalyticsProperties;
+import com.amplifyframework.analytics.UserProfile;
+import com.amplifyframework.analytics.pinpoint.AWSPinpointAnalyticsPlugin;
+import com.amplifyframework.analytics.pinpoint.models.AWSPinpointUserProfile;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
@@ -71,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         allTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToAllTasks = new Intent(MainActivity.this, AllTasks.class);
                 startActivity(goToAllTasks);
             }
@@ -81,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         addtask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToAddTask = new Intent(MainActivity.this,  AddTask.class);
                 startActivity(goToAddTask);
             }
@@ -91,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToSettings = new Intent(MainActivity.this,  Setting.class);
                 startActivity(goToSettings);
             }
@@ -144,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
             // ----------------lab37---------------------------------
 
 
+            // ----------------lab39--------------
+            Amplify.addPlugin(new AWSPinpointAnalyticsPlugin(getApplication()));
+            // ----------------lab39--------------
             Amplify.configure(getApplicationContext());
 
             Log.i("MyAmplifyApp", "Initialized Amplify");
@@ -182,10 +193,11 @@ public class MainActivity extends AppCompatActivity {
                     () -> Log.i("AuthQuickstart", "Signed out successfully"),
                     error -> Log.e("not complemte", error.toString())
             );
-
+            Action();
             Intent intent = new Intent(MainActivity.this, SignIn.class);
             startActivity(intent);
         });
+
 
     }
 
@@ -259,5 +271,17 @@ public class MainActivity extends AppCompatActivity {
         targetingClient.updateEndpointProfile(endpointProfile);
         Log.d(TAG, "Assigned user ID " + endpointProfileUser.getUserId() +
                 " to endpoint " + endpointProfile.getEndpointId());
+    }
+
+
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

@@ -88,6 +88,12 @@ dependencies {
     // lab37
     implementation 'com.github.onimur:handle-path-oz:1.0.7'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+ // lab39
+
+    implementation 'com.amplifyframework:aws-analytics-pinpoint:1.29.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'
