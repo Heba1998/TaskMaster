@@ -161,3 +161,14 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
   
 
 ![](screenshots/lab41.png)
+
+
+## **Lab42**
+
+* Location
+  *When the user adds a task, their location should be retrieved and included as part of the saved Task.*
+
+* Displaying Location
+  *On the Task Detail activity, the location of a Task should be displayed if it exists.*
+
+![](screenshots/lab42.png)

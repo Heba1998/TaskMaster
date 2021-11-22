@@ -1,5 +1,6 @@
 package com.example.taskmaster;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,12 +14,18 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.amplifyframework.core.Amplify;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-public class TaskDetail extends AppCompatActivity {
-
+public class TaskDetail extends AppCompatActivity implements OnMapReadyCallback {
+    private GoogleMap googleMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +76,23 @@ public class TaskDetail extends AppCompatActivity {
 //                    Log.i("MyAmplifyApp", "Successfully downloaded: " + result.getFile());},
 //                error -> Log.e("MyAmplifyApp",  "Download Failure", error)
 //        );
+
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        supportMapFragment.getMapAsync(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        Intent intent = getIntent();
+        LatLng myLocation = new LatLng(getIntent().getDoubleExtra("latitude", intent.getFloatExtra("latitude",0)),
+                getIntent().getDoubleExtra("longitude", intent.getFloatExtra("longitude",0)));
+        googleMap.addMarker(new MarkerOptions().position(myLocation).title("My Location In Jordan"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
     }
 }

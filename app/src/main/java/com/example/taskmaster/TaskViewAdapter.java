@@ -71,6 +71,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
                 goToDetails.putExtra("state",AllTasks.get(position).getState());
                 goToDetails.putExtra("image",AllTasks.get(position).getImage());
                 Log.i("UNIQUE", AllTasks.get(position).getImage());
+                goToDetails.putExtra("latitude", AllTasks.get(position).getLatitude());
+                goToDetails.putExtra("longitude",AllTasks.get(position).getLongitude());
                 view.getContext().startActivity(goToDetails);
             }
         });

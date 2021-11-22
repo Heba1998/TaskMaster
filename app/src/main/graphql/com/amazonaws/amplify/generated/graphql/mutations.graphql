@@ -9,9 +9,8 @@ mutation CreateTask(
     body
     state
     image
-    _version
-    _deleted
-    _lastChangedAt
+    latitude
+    longitude
     createdAt
     updatedAt
   }
@@ -26,9 +25,8 @@ mutation UpdateTask(
     body
     state
     image
-    _version
-    _deleted
-    _lastChangedAt
+    latitude
+    longitude
     createdAt
     updatedAt
   }
@@ -43,9 +41,8 @@ mutation DeleteTask(
     body
     state
     image
-    _version
-    _deleted
-    _lastChangedAt
+    latitude
+    longitude
     createdAt
     updatedAt
   }

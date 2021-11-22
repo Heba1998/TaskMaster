@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toolbar;
 
 public class Setting extends AppCompatActivity {
-
+    public static final String ACTION_LOCATION_SOURCE_SETTINGS = "LOCATION_SOURCE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
