@@ -37,35 +37,35 @@
         android:id="@+id/body"
         android:layout_width="316dp"
         android:layout_height="148dp"
-        android:text="@string/hard_work_makes_us_strong_as_a_person_when_you_seriously_hard_work_for_prosperity_you_automatically_get_prepared_for_the_worst_there_will_always_be_odds_in_life_but_an_honest_journey_for_success_is_invaluable_because_it_helps_us_live_a_life_as_a_strong_and_independent_person"
-        android:textStyle="bold"
         android:fontFamily="cursive"
+        android:text="@string/hard_work_makes_us_strong_as_a_person_when_you_seriously_hard_work_for_prosperity_you_automatically_get_prepared_for_the_worst_there_will_always_be_odds_in_life_but_an_honest_journey_for_success_is_invaluable_because_it_helps_us_live_a_life_as_a_strong_and_independent_person"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.631"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.636" />
+        app:layout_constraintVertical_bias="0.567" />
 
     <TextView
         android:id="@+id/title1"
         android:layout_width="156dp"
         android:layout_height="42dp"
-        android:text="@string/task_title1"
         android:fontFamily="cursive"
-        android:textStyle="bold"
+        android:text="@string/task_title1"
         android:textAlignment="center"
-        android:textSize="30sp"
         android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.129" />
+        app:layout_constraintVertical_bias="0.107" />
 
     <TextView
         android:id="@+id/state"
@@ -89,11 +89,22 @@
         android:layout_height="179dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.438"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.28"
+        app:layout_constraintVertical_bias="0.244"
         app:srcCompat="@drawable/ic_launcher_background" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="181dp"
+        android:layout_height="179dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.902" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,8 @@ subscription OnCreateTask {
     body
     state
     image
-    _version
-    _deleted
-    _lastChangedAt
+    latitude
+    longitude
     createdAt
     updatedAt
   }
@@ -20,9 +19,8 @@ subscription OnUpdateTask {
     body
     state
     image
-    _version
-    _deleted
-    _lastChangedAt
+    latitude
+    longitude
     createdAt
     updatedAt
   }
@@ -34,9 +32,8 @@ subscription OnDeleteTask {
     body
     state
     image
-    _version
-    _deleted
-    _lastChangedAt
+    latitude
+    longitude
     createdAt
     updatedAt
   }
