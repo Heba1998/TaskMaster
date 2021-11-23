@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toolbar;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
+import com.amplifyframework.core.Amplify;
+
 public class Setting extends AppCompatActivity {
     public static final String ACTION_LOCATION_SOURCE_SETTINGS = "LOCATION_SOURCE";
     @Override
@@ -25,7 +28,7 @@ public class Setting extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Action();
                 Intent intent = new Intent(Setting.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -37,6 +40,7 @@ public class Setting extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToHome = new Intent(Setting.this, MainActivity.class);
                 startActivity(goToHome);
             }
@@ -52,5 +56,15 @@ public class Setting extends AppCompatActivity {
             welcomeMsg.putString("username",username);
             welcomeMsg.apply();
         }));
+    }
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

@@ -4,15 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.core.Amplify;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,7 +41,7 @@ public class TaskDetail extends AppCompatActivity implements OnMapReadyCallback 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Action();
                 Intent intent   = new Intent(TaskDetail.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -94,5 +97,15 @@ public class TaskDetail extends AppCompatActivity implements OnMapReadyCallback 
                 getIntent().getDoubleExtra("longitude", intent.getFloatExtra("longitude",0)));
         googleMap.addMarker(new MarkerOptions().position(myLocation).title("My Location In Jordan"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+    }
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 }

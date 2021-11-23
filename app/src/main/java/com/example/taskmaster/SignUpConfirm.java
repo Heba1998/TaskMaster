@@ -32,7 +32,7 @@ public class SignUpConfirm extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Action();
                 Intent intent   = new Intent(SignUpConfirm.this, SignUp.class);
                 startActivity(intent);
             }

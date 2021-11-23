@@ -30,9 +30,11 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+import com.amplifyframework.core.Action;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
@@ -114,7 +116,7 @@ public class AddTask extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Action();
                 Intent intent = new Intent(AddTask.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -122,6 +124,7 @@ public class AddTask extends AppCompatActivity {
 
         Button uploadImg = findViewById(R.id.upload);
         uploadImg.setOnClickListener(view -> {
+            Action();
             fileChoose();
             uploadInputStream();
 
@@ -136,6 +139,7 @@ public class AddTask extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                Action();
                 textView.setText("Total Tasks :" + counter++);
                 Toast.makeText(getApplicationContext(), "you added task successfully 📝🖊", Toast.LENGTH_SHORT).show();
 
@@ -322,6 +326,16 @@ public class AddTask extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
     }
 
     @Override
