@@ -3,10 +3,15 @@ package com.example.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toolbar;
+
+import com.amplifyframework.analytics.AnalyticsEvent;
+import com.amplifyframework.core.Amplify;
 
 public class AllTasks extends AppCompatActivity {
 
@@ -23,7 +28,7 @@ public class AllTasks extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Action();
                 Intent intent   = new Intent(AllTasks.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -34,10 +39,20 @@ public class AllTasks extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
+                Action();
                 Intent goToHome = new Intent(AllTasks.this, MainActivity.class);
                 startActivity(goToHome);
             }
         });
     }
 
+    public void Action(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userName = sharedPreferences.getString("username","user");
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Add Task Button Pressed")
+                .addProperty("UserName", userName)
+                .build();
+        Amplify.Analytics.recordEvent(event);
+    }
 }

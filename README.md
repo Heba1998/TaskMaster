@@ -172,3 +172,15 @@ Refactor your homepage’s RecyclerView to display all Task entities in DynamoDB
   *On the Task Detail activity, the location of a Task should be displayed if it exists.*
 
 ![](screenshots/lab42.png)
+
+
+
+## **Lab43**
+
+* Analytics
+  *Using Amplify and Pinpoint, add session analytics to your application.*
+
+![](screenshots/lab43.png)
+
+
+![](screenshots/lab43-2.png)

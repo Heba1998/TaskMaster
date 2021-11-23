@@ -36,6 +36,7 @@ public class SignIn extends AppCompatActivity {
 
                 Intent intent   = new Intent(SignIn.this, SignUpConfirm.class);
                 startActivity(intent);
+                Action();
             }
         });
 
