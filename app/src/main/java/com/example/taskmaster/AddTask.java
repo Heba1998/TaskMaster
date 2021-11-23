@@ -75,7 +75,11 @@ public class AddTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
+        /////////// lab42 //////////
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        ///////////////////////
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
 //----------------------------------------
